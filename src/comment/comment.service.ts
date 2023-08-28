@@ -69,7 +69,7 @@ export class CommentService {
 
   async updateComment(id: number, updateCommentDto: UpdateCommentDto, res: Response) {
     try {
-      const comment = await this.prisma.user.findFirst({
+      const comment = await this.prisma.comment.findFirst({
         where: {
           id
         }
