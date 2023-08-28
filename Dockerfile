@@ -1,16 +1,14 @@
-FROM node:16
+FROM node                           # Use basic node image
 
-WORKDIR /app
+WORKDIR /usr/src/app                # Set working dir inside base docker image
 
-COPY package*.json ./
-COPY prisma ./prisma/
+COPY . .                            # Copy our project files to docker image
 
-RUN npm install
+RUN npm install                     # Install project dependencies
+RUN npx prisma generate             # Generate Prisma client files
 
-COPY . .
+RUN yarn build                      # Build our nestjs
 
-RUN npm run build
+EXPOSE 8080                         # Espose our app port for incoming requests
 
-EXPOSE 8080
-
-CMD [ "npm", "run", "start:prod" ] 
+CMD ["npm", "run","start:prod"]     # Run our app
