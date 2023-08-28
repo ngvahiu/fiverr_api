@@ -120,7 +120,7 @@ export class UserService {
       const { pageIndex, pageSize, keyword } = paginationUserDto;
 
       const userList = await this.prisma.user.findMany({
-        skip: +pageIndex,
+        skip: +pageIndex * +pageSize,
         take: +pageSize,
         where: {
           name: {

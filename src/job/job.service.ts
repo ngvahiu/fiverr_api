@@ -384,7 +384,7 @@ export class JobService {
       const { pageIndex, pageSize, keyword } = paginationJobDTO;
 
       const jobList = await this.prisma.job.findMany({
-        skip: +pageIndex,
+        skip: +pageIndex * +pageSize,
         take: +pageSize,
         where: {
           name: {
