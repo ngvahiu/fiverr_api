@@ -1,0 +1,94 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model comment {
+  id            Int       @id @default(autoincrement())
+  job_id        Int
+  user_id       Int
+  comment_date  DateTime? @db.DateTime(0)
+  description   String?   @db.VarChar(300)
+  stars_comment Int?
+  job           job       @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_Comment_Job")
+  user          user      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_Comment_User")
+
+  @@index([job_id], map: "FK_Comment_Job")
+  @@index([user_id], map: "FK_Comment_User")
+}
+
+model hire_job {
+  id        Int       @id @default(autoincrement())
+  job_id    Int
+  user_id   Int
+  hire_date DateTime? @db.DateTime(0)
+  completed Boolean?
+  job       job       @relation(fields: [job_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_HireJob_Job")
+  user      user      @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_HireJob_User")
+
+  @@index([job_id], map: "FK_HireJob_Job")
+  @@index([user_id], map: "FK_HireJob_User")
+}
+
+model job {
+  id                     Int                 @id @default(autoincrement())
+  name                   String              @db.VarChar(255)
+  rate                   Int?
+  price                  Float?
+  image                  String?             @db.VarChar(300)
+  description            String?             @db.VarChar(500)
+  short_description      String?             @db.VarChar(200)
+  stars                  Float?              @db.Float
+  job_detail_category_id Int
+  creator                Int
+  comment                comment[]
+  hire_job               hire_job[]
+  job_detail_category    job_detail_category @relation(fields: [job_detail_category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_Job_JobDetailCategory")
+  user                   user                @relation(fields: [creator], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_Job_User")
+
+  @@index([job_detail_category_id], map: "FK_Job_JobDetailCategory")
+  @@index([creator], map: "FK_Job_User")
+}
+
+model job_category {
+  id                  Int                   @id @default(autoincrement())
+  name                String?               @db.VarChar(255)
+  job_detail_category job_detail_category[]
+}
+
+model job_detail_category {
+  id              Int          @id @default(autoincrement())
+  name            String       @db.VarChar(255)
+  image           String?      @db.VarChar(300)
+  job_category_id Int
+  job             job[]
+  job_category    job_category @relation(fields: [job_category_id], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_JobDetailCategory_JobCategory")
+
+  @@index([job_category_id], map: "FK_JobDetailCategory_JobCategory")
+}
+
+model user {
+  id            Int        @id @default(autoincrement())
+  name          String     @db.VarChar(100)
+  email         String     @db.VarChar(255)
+  password      String     @db.VarChar(100)
+  phone         String     @db.VarChar(10)
+  birthday      DateTime   @db.Date
+  gender        String     @db.VarChar(1)
+  role          String     @db.VarChar(5)
+  skill         String?    @db.VarChar(1000)
+  certification String?    @db.VarChar(1000)
+  avatar        String?    @db.VarChar(300)
+  comment       comment[]
+  hire_job      hire_job[]
+  job           job[]
+}
+
+model current_active_token {
+  sub   Int
+  token String @id @db.VarChar(500)
+}
