@@ -207,10 +207,10 @@ export class JobDetailCategoryService {
           });
 
           if (checkJobCategory) {
-            if (jobDetailCategory.image) {
-              //delete old file in server
-              fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
-            }
+            // if (jobDetailCategory.image) {
+            //   //delete old file in server
+            //   fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
+            // }
 
             const updatedJobDetailCategory = await this.prisma.job_detail_category.update({
               where: {
@@ -266,10 +266,10 @@ export class JobDetailCategoryService {
           }
         });
 
-        if (jobDetailCategory.image) {
-          //delete old file in server
-          fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
-        }
+        // if (jobDetailCategory.image) {
+        //   //delete old file in server
+        //   fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
+        // }
 
         return res.status(HttpStatus.OK).json({
           statusCode: 200,
@@ -295,10 +295,10 @@ export class JobDetailCategoryService {
       });
 
       if (jobDetailCategory) {
-        if (jobDetailCategory.image) {
-          //delete old file in server
-          fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
-        }
+        // if (jobDetailCategory.image) {
+        //   //delete old file in server
+        //   fs.unlinkSync(process.cwd() + "\\public\\job-detail-category\\" + jobDetailCategory.image);
+        // }
 
         const updatedJobDetailCategory = await this.prisma.job_detail_category.update({
           where: {

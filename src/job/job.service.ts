@@ -208,10 +208,10 @@ export class JobService {
           });
 
           if (!checkJob || checkJob.id === id) {
-            if (job.image) {
-              //delete old file in server
-              fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
-            }
+            // if (job.image) {
+            //   //delete old file in server
+            //   fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
+            // }
 
             const updatedJob = await this.prisma.job.update({
               where: {
@@ -271,10 +271,10 @@ export class JobService {
           }
         });
 
-        if (job.image) {
-          //delete old file in server
-          fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
-        }
+        // if (job.image) {
+        //   //delete old file in server
+        //   fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
+        // }
 
         return res.status(HttpStatus.OK).json({
           statusCode: 200,
@@ -300,10 +300,10 @@ export class JobService {
       });
 
       if (job) {
-        if (job.image) {
-          //delete old file in server
-          fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
-        }
+        // if (job.image) {
+        //   //delete old file in server
+        //   fs.unlinkSync(process.cwd() + "\\public\\job\\" + job.image);
+        // }
 
         const updatedJob = await this.prisma.job.update({
           where: {
